@@ -3,7 +3,7 @@ import locators from "../../fixtures/productLocators.json";
 import { createUserAccountViaAPI } from "../../Framework/apiHelper";
 
 Given("I create a new user account using API", () => {
-    cy.fixture("createNewUserApiTestData.json").then((userData) => {
+    cy.fixture("createNewUserTestData.json").then((userData) => {
         const email = `testuser_${Date.now()}@example.com`;
         cy.wrap(email).as("userEmail");
         cy.wrap(userData.password).as("userPassword");
@@ -11,27 +11,17 @@ Given("I create a new user account using API", () => {
     });
 });
 
-When("I login with the user email {string} and password {string}", (email: string, password: string) => {
-    cy.findByDataTest(locators.sign_in_link_data_test).should("be.visible").and('have.text', 'Sign in').click();
-    cy.findByDataTest(locators.email_input_data_test).should("be.visible").type(email);
-    cy.findByDataTest(locators.password_input_data_test).should("be.visible").type(password, { log: false });
-    cy.findByDataTest(locators.login_button_data_test).should("be.visible").click();
-    cy.findByDataTest(locators.nav_menu_data_test).should("be.visible").and("contain.text", "Jack Howe");
-});
-
 When("I login with the newly created user account", () => {
-    // cy.get("@userEmail").then((email) => {
-    //     cy.get("@userPassword").then((password) => {
-    //         cy.log(`Logging in with email: ${email}`);
-    cy.findByDataTest(locators.sign_in_link_data_test).should("be.visible").and('have.text', 'Sign in').click();
-    // cy.findByDataTest(locators.email_input_data_test).should("be.visible").type(email);
-    //  cy.findByDataTest(locators.password_input_data_test).should("be.visible").type(password, { log: false });
-    cy.findByDataTest(locators.email_input_data_test).should("be.visible").type("testuser_1784149354249@example.com");
-    cy.findByDataTest(locators.password_input_data_test).should("be.visible").type("Autocypresstest2@", { log: false });
-    cy.findByDataTest(locators.login_button_data_test).should("be.visible").click();
-    cy.findByDataTest(locators.nav_menu_data_test).should("be.visible").and("contain.text", "test user");
-    //     });
-    // });
+    cy.get("@userEmail").then((email) => {
+        cy.get("@userPassword").then((password) => {
+            cy.log(`Logging in with email: ${email}`);
+            cy.findByDataTest(locators.sign_in_link_data_test).should("be.visible").and('have.text', 'Sign in').click();
+            cy.findByDataTest(locators.email_input_data_test).should("be.visible").type(email);
+            cy.findByDataTest(locators.password_input_data_test).should("be.visible").type(password, { log: false });
+            cy.findByDataTest(locators.login_button_data_test).should("be.visible").click();
+            cy.findByDataTest(locators.nav_menu_data_test).should("be.visible").and("contain.text", "test user");
+        });
+    });
 });
 
 When("I Add a product {string}  {string}to the cart", (productName: string, productQuantity: string) => {
@@ -69,8 +59,3 @@ export function verifyProductDetailsonCartPage(expectedProductName: string) {
         cy.findByDataTest(locators.cart_total_data_test).should("be.visible").and('contain.text', productDetails.unitPrice);
     });
 };
-
-// export function checkoutAsLoggedinUser()
-// {
-//     cy.
-// }

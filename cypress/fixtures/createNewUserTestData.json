@@ -2,13 +2,14 @@
     "first_name": "test",
     "last_name": "user",
     "dob": "1980-10-10",
-    "phone": "07448167214",
+    "phone": "0123456789",
     "email": "",
     "password": "Autocypresstest2@",
     "address": {
         "street": "Phillips Light",
         "city": "Charlottechester",
         "state": "Woods Lane",
+        "houseNumber":"667",
         "country": "GB",
         "postal_code": "mk8 1GH"
     }

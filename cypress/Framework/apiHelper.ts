@@ -1,4 +1,48 @@
 
+export function findOutOfStockProduct(page = 1) {
+    cy.request({
+        method: "GET",
+        url: `https://api.practicesoftwaretesting.com/products?page=${page}`,
+        failOnStatusCode: false,
+    }).then((response) => {
+        cy.log("Products page:", String(page));
+        expect(response.status).to.eq(200);
+
+        const products = response.body.data as Product[];
+        const outOfStockProduct = products.find((product) => !product.in_stock && !product.is_rental);
+
+        if (outOfStockProduct) {
+            cy.wrap(outOfStockProduct).as("outOfStockProduct");
+        } else if (page < response.body.last_page) {
+            findOutOfStockProduct(page + 1);
+        } else {
+            throw new Error("No out-of-stock product was found.");
+        }
+    });
+}
+
+export function findInStockProduct(page = 1) {
+    cy.request({
+        method: "GET",
+        url: `https://api.practicesoftwaretesting.com/products?page=${page}`,
+        failOnStatusCode: false,
+    }).then((response) => {
+        cy.log("Products page:", String(page));
+        expect(response.status).to.eq(200);
+
+        const products = response.body.data as Product[];
+        const inStockProduct = products.find((product) => product.in_stock && !product.is_rental);
+
+        if (inStockProduct) {
+            cy.wrap(inStockProduct).as("inStockProduct");
+        } else if (page < response.body.last_page) {
+            findInStockProduct(page + 1);
+        } else {
+            throw new Error("No in-stock product was found.");
+        }
+    });
+}
+
 export function createUserAccountViaAPI(userData: UserPayload) {
     cy.log("Request body:", JSON.stringify(userData));
     cy.request({
@@ -32,4 +76,13 @@ export interface UserAddress {
     state: string;
     country: string;
     postal_code: string;
+}
+
+export interface Product {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    in_stock: boolean;
+    is_rental: boolean;
 }
