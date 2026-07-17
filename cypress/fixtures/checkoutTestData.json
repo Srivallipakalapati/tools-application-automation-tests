@@ -1,0 +1,20 @@
+{
+    "billingAddress": {
+        "country": "United Kingdom of Great Britain and Northern Ireland (the)",
+        "postalCode": "mk8 1aa",
+        "houseNumber": "12",
+        "state": "test"
+    },
+    "bankTransfer": {
+        "paymentMethod": "Bank Transfer",
+        "bankName": "Test Bank",
+        "accountName": "Test Account",
+        "accountNumber": "123456789"
+    },
+    "invalidBankTransfer": {
+        "paymentMethod": "Bank Transfer",
+        "bankName": "Test Bank",
+        "accountName": "Test Account",
+        "accountNumber": "ABC123XYZ"
+    }
+}

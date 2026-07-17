@@ -12,6 +12,7 @@ Given("I get an in stock product from the catalogue", () => {
 
 When("I search for the in stock product", () => {
   cy.get("@inStockProduct").then((product) => {
+    cy.findByDataTest(locators.nav_home_data_test).should("be.visible").click();
     cy.findByDataTest(locators.search_query_data_test).clear().type(product.name);
     cy.findByDataTest(locators.search_submit_data_test).click();
   });
