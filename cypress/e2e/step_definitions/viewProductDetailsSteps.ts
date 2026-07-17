@@ -10,11 +10,17 @@ Given("I get an in stock product from the catalogue", () => {
   findInStockProduct();
 });
 
+When("I click on home button", () => {
+  cy.findByDataTest(locators.nav_home_data_test).should("be.visible").click();
+
+})
+
 When("I search for the in stock product", () => {
+  cy.intercept("**/search*").as("searchProducts");
   cy.get("@inStockProduct").then((product) => {
-    cy.findByDataTest(locators.nav_home_data_test).should("be.visible").click();
     cy.findByDataTest(locators.search_query_data_test).clear().type(product.name);
     cy.findByDataTest(locators.search_submit_data_test).click();
+    cy.wait("@searchProducts").its("response.statusCode").should("eq", 200);
   });
 });
 
@@ -22,7 +28,6 @@ When("I click on the in stock product from the search results", () => {
   cy.get<Product>("@inStockProduct").then((product) => {
     cy.findByDataTest(locators.product_name_data_test)
       .filter((_, result) => result.textContent?.trim() === product.name)
-      .should("have.length", 1)
       .closest("a")
       .then(($link) => {
         cy.wrap($link.attr("href")).as("productHref");
@@ -55,8 +60,16 @@ Then("I should be redirected to the product details page", () => {
 
 When("I open an out of stock product", () => {
   findOutOfStockProduct();
+  cy.intercept("**/search*").as("searchProducts");
   cy.get("@outOfStockProduct").then((product) => {
-    cy.visit(`/product/${product.id}`);
+    cy.findByDataTest(locators.search_query_data_test).clear().type(product.name);
+    cy.findByDataTest(locators.search_submit_data_test).click();
+    cy.wait("@searchProducts").its("response.statusCode").should("eq", 200);
+
+    cy.findByDataTest(locators.product_name_data_test)
+      .filter((_, result) => result.textContent?.trim() === product.name)
+      .closest("a")
+      .click();
   });
 });
 

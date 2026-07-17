@@ -9,7 +9,10 @@ Given("I register a new user account", () => {
     cy.wrap(email).as("userEmail");
     cy.wrap(newUser.password).as("userPassword");
 
-    cy.visit("/auth/register");
+   cy.findByDataTest(locators.nav_sign_in_data_test).click();
+    cy.url().should("include" ,"auth/login");
+    cy.findByDataTest(locators.register_link_data_test).click();
+    cy.url().should("include" ,"auth/register");
     cy.intercept("GET", "**/postcode-lookup*").as("postcodeLookup");
 
     cy.findByDataTest(locators.first_name_input_data_test).type(newUser.first_name);
@@ -37,7 +40,7 @@ Given("I register a new user account", () => {
 });
 
 function submitLogin(email: string, password: string) {
-  cy.visit("/auth/login");
+  cy.findByDataTest(locators.nav_sign_in_data_test).click();
   cy.findByDataTest(locators.email_input_data_test).should("be.visible").clear().type(email);
   cy.findByDataTest(locators.password_input_data_test).should("be.visible").clear().type(password, { log: false });
   cy.findByDataTest(locators.login_button_data_test).should("be.visible").click();

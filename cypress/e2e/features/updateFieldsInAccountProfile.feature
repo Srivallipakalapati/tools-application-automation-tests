@@ -1,6 +1,9 @@
 Feature: Update fields in account profile
     As a newly registered user, I would like to login and update my account information.
 
+    Background:
+    Given I navigate to the tool shop application
+
     Scenario: A newly registered user can log in and update their profile
         Given I register a new user account
         When I log in with my new account

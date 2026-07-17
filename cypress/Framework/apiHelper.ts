@@ -1,6 +1,9 @@
 
 const apiUrl = () => Cypress.expose("apiUrl") as string;
 
+const isInStock = (product: Product) =>
+    typeof product.in_stock === "boolean" ? product.in_stock : (product.stock ?? 0) > 0;
+
 export function findOutOfStockProduct(page = 1) {
     cy.request({
         method: "GET",
@@ -11,7 +14,7 @@ export function findOutOfStockProduct(page = 1) {
         expect(response.status).to.eq(200);
 
         const products = response.body.data as Product[];
-        const outOfStockProduct = products.find((product) => !product.in_stock && !product.is_rental);
+        const outOfStockProduct = products.find((product) => !isInStock(product) && !product.is_rental);
 
         if (outOfStockProduct) {
             cy.wrap(outOfStockProduct).as("outOfStockProduct");
@@ -33,7 +36,7 @@ export function findInStockProduct(page = 1) {
         expect(response.status).to.eq(200);
 
         const products = response.body.data as Product[];
-       const inStockProduct = products.find((product) => product.in_stock && !product.is_rental);
+        const inStockProduct = products.find((product) => isInStock(product) && !product.is_rental);
 
         if (inStockProduct) {
             cy.wrap(inStockProduct).as("inStockProduct");
@@ -105,6 +108,7 @@ export interface Product {
     description: string;
     price: number;
     in_stock?: boolean;
+    stock?: number;
     is_rental: boolean;
 }
 
