@@ -73,3 +73,7 @@ Each helper stores its result as a Cypress alias (`@inStockProduct` and so on) f
 - `cypress/fixtures/` — test data and locators
 - `cypress/Framework/` — shared helpers (e.g. API calls)
 - `cypress/support/` — custom commands and global setup
+
+## Note
+
+- Due to time restrictions, I am unable to complete `filter` products test in scenarion 3 as the test more time than anticipated. 

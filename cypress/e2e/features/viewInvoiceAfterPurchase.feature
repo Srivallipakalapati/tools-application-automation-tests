@@ -1,4 +1,6 @@
 Feature: view invoice after purchase
+As a logged-in user, I would like to check my invoice after completing a purchase
+
 
     Background:
         Given I create a new user account using API

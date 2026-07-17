@@ -16,7 +16,7 @@ export default defineConfig({
     charts: true,
     embeddedScreenshots: true,
     inlineAssets: true,
-    overwrite: true,
+    overwrite: false,
     html: false,
     json: true,
     code: false

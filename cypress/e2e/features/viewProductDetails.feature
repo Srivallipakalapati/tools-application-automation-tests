@@ -1,4 +1,5 @@
 Feature: View Product Details
+As a visitor, I want to view detailed information about a specific tool so that I can learn more before purchasing. 
 
   Background:
     Given I navigate to the tool shop application
