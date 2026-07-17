@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "cy:open": "cypress open",
-    "cy:run": "cypress run",
-    "test": "cypress run"
+    "cy:open": "cypress open --env envFile=main",
+    "cy:open:bugs": "Cypress open --env envFile=bugenv",
+    "test:main": "cypress run --env envFile=main",
+    "test:bugs": "cypress run --env envFile=bugenv"
   },
   "dependencies": {
     "@testing-library/cypress": "^10.1.3",

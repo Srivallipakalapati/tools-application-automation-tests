@@ -1,8 +1,10 @@
 
+const apiUrl = () => Cypress.expose("apiUrl") as string;
+
 export function findOutOfStockProduct(page = 1) {
     cy.request({
         method: "GET",
-        url: `https://api.practicesoftwaretesting.com/products?page=${page}`,
+        url: `${apiUrl()}/products?page=${page}`,
         failOnStatusCode: false,
     }).then((response) => {
         cy.log("Products page:", String(page));
@@ -24,14 +26,14 @@ export function findOutOfStockProduct(page = 1) {
 export function findInStockProduct(page = 1) {
     cy.request({
         method: "GET",
-        url: `https://api.practicesoftwaretesting.com/products?page=${page}`,
+        url: `${apiUrl()}/products?page=${page}`,
         failOnStatusCode: false,
     }).then((response) => {
         cy.log("Products page:", String(page));
         expect(response.status).to.eq(200);
 
         const products = response.body.data as Product[];
-        const inStockProduct = products.find((product) => product.in_stock && !product.is_rental);
+       const inStockProduct = products.find((product) => product.in_stock && !product.is_rental);
 
         if (inStockProduct) {
             cy.wrap(inStockProduct).as("inStockProduct");
@@ -47,7 +49,7 @@ export function createUserAccountViaAPI(userData: UserPayload) {
     cy.log("Request body:", JSON.stringify(userData));
     cy.request({
         method: "POST",
-        url: "https://api.practicesoftwaretesting.com/users/register",
+        url: `${apiUrl()}/users/register`,
         body: userData,
         failOnStatusCode: false,
         headers: {
@@ -83,6 +85,6 @@ export interface Product {
     name: string;
     description: string;
     price: number;
-    in_stock: boolean;
+    in_stock?: boolean;
     is_rental: boolean;
 }
