@@ -114,8 +114,8 @@ export class CheckoutPage extends BasePage {
   reviewCartAndProceed(product: Product): void {
     const unitPrice = product.price.toFixed(2);
     this.productTitle.should("be.visible").and("contain.text", product.name);
-    cy.get("@productQuantity").then((productQuantity) => {
-      this.productQuantity.should("be.visible").and("contain.value", productQuantity as unknown as string);
+    cy.get<string>("@productQuantity").then((productQuantity) => {
+      this.productQuantity.should("be.visible").and("contain.value", productQuantity);
     });
     this.productPrice.should("be.visible").and("contain.text", unitPrice);
     this.linePrice.should("be.visible").and("contain.text", unitPrice);

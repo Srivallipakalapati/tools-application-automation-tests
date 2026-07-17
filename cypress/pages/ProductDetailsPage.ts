@@ -47,8 +47,8 @@ export class ProductDetailsPage extends BasePage {
   }
 
   assertOnDetailsUrl(): void {
-    cy.get("@productHref").then((productHref) => {
-      cy.url().should("include", productHref as unknown as string);
+    cy.get<string>("@productHref").then((productHref) => {
+      cy.url().should("include", productHref);
     });
   }
 
