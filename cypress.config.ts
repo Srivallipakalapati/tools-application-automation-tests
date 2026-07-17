@@ -6,6 +6,7 @@ import { addCucumberPreprocessorPlugin } from "@badeball/cypress-cucumber-prepro
 export default defineConfig({
   e2e: {
     specPattern: "cypress/e2e/**/*.feature",
+    "watchForFileChanges": false,
     baseUrl: 'https://practicesoftwaretesting.com/',
     async setupNodeEvents(on, config) {
       await addCucumberPreprocessorPlugin(on, config); on("file:preprocessor", createBundler({

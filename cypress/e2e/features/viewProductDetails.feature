@@ -3,7 +3,7 @@ Feature: View Product Details
   Background:
     Given I navigate to the tool shop application
 
-  Scenario: View the details of an in-stock product
+  Scenario: View the details of an in-stock product 
     Given I get an in stock product from the catalogue
     When I search for the in stock product
     And I click on the in stock product from the search results
