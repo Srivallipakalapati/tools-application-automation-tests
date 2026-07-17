@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "cy:open": "cypress open --env envFile=main",
+    "cy:open:bugs": "Cypress open --env envFile=bugenv",
+    "test:main": "cypress run --env envFile=main",
+    "test:bugs": "cypress run --env envFile=bugenv"
+  },
   "dependencies": {
     "@testing-library/cypress": "^10.1.3",
     "cypress": "^15.18.1",
@@ -6,7 +12,9 @@
   },
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "^26.0.0",
-    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8"
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
+    "@types/node": "^26.1.1",
+    "cypress-mochawesome-reporter": "^4.0.2"
   },
   "cypress-cucumber-preprocessor": {
     "stepDefinitions": "cypress/e2e/step_definitions/**/*.{js,ts}"
