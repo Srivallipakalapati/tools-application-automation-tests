@@ -1,0 +1,10 @@
+export { navBar } from "./components/NavBar";
+export { searchBar } from "./components/SearchBar";
+export { homePage } from "./HomePage";
+export { productDetailsPage } from "./ProductDetailsPage";
+export { productListPage } from "./ProductListPage";
+export { loginPage } from "./LoginPage";
+export { registerPage } from "./RegisterPage";
+export { profilePage } from "./ProfilePage";
+export { checkoutPage } from "./CheckoutPage";
+export { invoicePage } from "./InvoicePage";

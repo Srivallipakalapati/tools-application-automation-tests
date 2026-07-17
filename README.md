@@ -69,10 +69,15 @@ Each helper stores its result as a Cypress alias (`@inStockProduct` and so on) f
 ## Layout
 
 - `cypress/e2e/features/` — Gherkin `.feature` files
-- `cypress/e2e/step_definitions/` — step implementations
-- `cypress/fixtures/` — test data and locators
+- `cypress/e2e/step_definitions/` — step implementations; these are thin and delegate to page objects
+- `cypress/pages/` — Page Object Model: one class per page (plus `components/` for shared UI like the nav bar and search bar). Each page owns its own `data-test` selectors as private getters and exposes actions/assertions. Import the ready-made singletons from `cypress/pages` (barrel export).
+- `cypress/fixtures/` — test data only (users, checkout data)
 - `cypress/Framework/` — shared helpers (e.g. API calls)
 - `cypress/support/` — custom commands and global setup
+
+### Page Object Model
+
+Locators used to live in a single flat `fixtures/productLocators.json`. They now live next to the behaviour that uses them, inside the relevant page class in `cypress/pages/`. To add or change a selector, edit the private getter on its page — step definitions never reference raw selectors.
 
 ## Note
 
