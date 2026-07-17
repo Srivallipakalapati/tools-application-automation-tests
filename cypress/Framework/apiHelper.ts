@@ -43,6 +43,25 @@ export function findInStockProduct(page = 1) {
     });
 }
 
+export function findCategoryByName(categoryName: string) {
+    cy.request({
+        method: "GET",
+        url: "https://api.practicesoftwaretesting.com/categories",
+        failOnStatusCode: false,
+    }).then((response) => {
+        expect(response.status).to.eq(200);
+
+        const categories = response.body as Category[];
+        const category = categories.find((c) => c.name === categoryName);
+
+        if (category) {
+            cy.wrap(category).as("category");
+        } else {
+            throw new Error(`Category '${categoryName}' was not found.`);
+        }
+    });
+}
+
 export function createUserAccountViaAPI(userData: UserPayload) {
     cy.log("Request body:", JSON.stringify(userData));
     cy.request({
@@ -85,4 +104,11 @@ export interface Product {
     price: number;
     in_stock: boolean;
     is_rental: boolean;
+}
+
+export interface Category {
+    id: string;
+    name: string;
+    slug: string;
+    parent_id: string | null;
 }
