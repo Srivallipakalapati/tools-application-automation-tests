@@ -129,7 +129,7 @@ export function AddBillingAddressDetailsAndProccedToCheckout() {
         cy.wrap(String(street).trim()).as("billingStreet");
     });
 
-    cy.findByDataTest(locators.state_data_test).should("be.visible").clear().type(billing.state);
+    cy.findByDataTest(locators.state_data_test).should("be.visible").wait(1000).clear().type(billing.state);
     cy.findByDataTest(locators.proceed_to_checkout_billing_address_data_test).should("be.visible").and("be.enabled").click();
 }
 
